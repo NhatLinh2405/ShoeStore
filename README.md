@@ -3,10 +3,9 @@
 
 # Day 6: 
    - State Server
-   - FETCH DATA FROM SERVER
-   - CONNECT MONGODB
-   - CREATE MODELS
-
+   - Fetch Data From Server
+   - Connect MongoDB
+   - Create Models
 
 
 # Getting Started with Create React App
