@@ -1,11 +1,12 @@
 # Day 1 - 5: 
-   Completed UI/UX
+   - Completed UI/UX
 
 # Day 6: 
-   State Server
-   FETCH DATA FROM SERVER
-   CONNECT MONGODB
-   CREATE MODELS
+   - State Server
+   - FETCH DATA FROM SERVER
+   - CONNECT MONGODB
+   - CREATE MODELS
+
 
 
 # Getting Started with Create React App
