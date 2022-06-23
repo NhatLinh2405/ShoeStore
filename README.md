@@ -2,7 +2,7 @@
    - Completed UI/UX
 
 # Day 6: 
-   - State Server
+   - Start Server
    - Fetch Data From Server
    - Connect MongoDB
    - Create Models
