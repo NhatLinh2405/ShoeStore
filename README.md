@@ -1,12 +1,20 @@
-# Day 1 - 5: 
-   - Completed UI/UX
+# Day 1 - 5:
 
-# Day 6: 
-   - Start Server
-   - Fetch Data From Server
-   - Connect MongoDB
-   - Create Models
+-   Completed UI/UX
 
+# Day 6:
+
+-   Start Server
+-   Fetch Data From Server
+-   Connect MongoDB
+-   Create Models
+
+# Day 7 - 8:
+
+-   Create Routes
+-   Insert Data In Database
+-   Error Handler Middleware
+-   Connect Redux
 
 # Getting Started with Create React App
 
