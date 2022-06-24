@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 
-export default function ShippingScreen() {
+export default function Shipping() {
     window.scrollTo(0, 0);
 
     const submitHandler = (e) => e.preventDefault();

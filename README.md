@@ -1,3 +1,7 @@
+### Front - end:
+
+### Back - end:
+
 # Day 1 - 5:
 
 -   Completed UI/UX
@@ -15,6 +19,12 @@
 -   Insert Data In Database
 -   Error Handler Middleware
 -   Connect Redux
+
+# Day 9:
+
+-   Create Action, Constant & Reducers
+-   Add And Remove Item Cart
+-   Update Cart Page
 
 # Getting Started with Create React App
 

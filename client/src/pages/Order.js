@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "./../components/Header";
 import { PayPalButton } from "react-paypal-button-v2";
 
-export default function OrderScreen() {
+export default function Order() {
     return (
         <>
             <Header />

@@ -5,7 +5,7 @@ import ShopSection from "../components/homeComponents/ShopSection";
 import Contact from "../components/homeComponents/Contact";
 import CalltoActionSection from "../components/homeComponents/CalltoActionSection";
 
-export default function HomeScreen() {
+export default function Home() {
     window.scrollTo(0, 0);
     return (
         <div>

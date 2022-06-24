@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import ProfileTabs from "../components/profileComponents/ProfileTabs";
 import Orders from "../components/profileComponents/Order";
 
-export default function ProfileScreen() {
+export default function Profile() {
     window.scrollTo(0, 0);
     return (
         <>

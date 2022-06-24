@@ -1,10 +1,25 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { productListReducer } from "./Reducers/ProductReducers";
+import { cartReducer } from "./Reducers/CartReducers";
+import {
+    productDetailReducer,
+    productListReducer,
+} from "./Reducers/ProductReducers";
 
-const initialState = {};
+const cartItemFromLocalStorage = localStorage.getItem("cartItems")
+    ? JSON.parse(localStorage.getItem("cartItems"))
+    : [];
+
 const store = configureStore({
-    reducer: { productList: productListReducer },
-    initialState,
+    reducer: {
+        productList: productListReducer,
+        productDetail: productDetailReducer,
+        cart: cartReducer,
+    },
+    initialState: {
+        cart: {
+            cartItems: cartItemFromLocalStorage,
+        },
+    },
 });
 
 export default store;
