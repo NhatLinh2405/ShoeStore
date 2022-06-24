@@ -1,26 +1,26 @@
-### Front - end:
+# Front - end:
 
-### Back - end:
+# Back - end:
 
-# Day 1 - 5:
+### Day 1 - 5:
 
 -   Completed UI/UX
 
-# Day 6:
+### Day 6:
 
 -   Start Server
 -   Fetch Data From Server
 -   Connect MongoDB
 -   Create Models
 
-# Day 7 - 8:
+### Day 7 - 8:
 
 -   Create Routes
 -   Insert Data In Database
 -   Error Handler Middleware
 -   Connect Redux
 
-# Day 9:
+### Day 9:
 
 -   Create Action, Constant & Reducers
 -   Add And Remove Item Cart
