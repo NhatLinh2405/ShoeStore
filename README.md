@@ -26,6 +26,13 @@
 -   Add And Remove Item Cart
 -   Update Cart Page
 
+### Day 10:
+
+-   Login , Register (API)
+-   User Profile
+-   Login Redux
+-   Update Login Page
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

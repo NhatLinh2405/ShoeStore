@@ -11,6 +11,7 @@ products;
 
 const ImportData = express.Router();
 
+// post user lên mongodb
 ImportData.post(
     "/user",
     asyncHandler(async (req, res) => {
@@ -20,6 +21,7 @@ ImportData.post(
     })
 );
 
+// post products lên mongodb
 ImportData.post(
     "/products",
     asyncHandler(async (req, res) => {

@@ -21,7 +21,7 @@ const reviewSchema = mongoose.Schema(
         },
     },
     {
-        timeTamps: true,
+        timestamps: true,
     }
 );
 
@@ -61,7 +61,7 @@ const productSchema = mongoose.Schema(
         },
     },
     {
-        timeTamps: true,
+        timestamps: true,
     }
 );
 
