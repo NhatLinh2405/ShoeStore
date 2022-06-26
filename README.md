@@ -1,6 +1,15 @@
 # Front - end:
 
+-   React
+-   React-Router-Dom
+-   Redux-Toolkit
+-   Bootstrap
+
 # Back - end:
+
+-   MongoDB
+-   NodeJs
+-   Express
 
 ### Day 1 - 5:
 
@@ -32,6 +41,12 @@
 -   User Profile
 -   Login Redux
 -   Update Login Page
+
+### Day 11:
+
+-   Update Logout
+-   Update Register page
+-   Update User Profile (API)
 
 # Getting Started with Create React App
 

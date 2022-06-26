@@ -40,7 +40,6 @@ userRouter.post(
 // register - dang ky
 userRouter.post(
     "/",
-    protect,
     asyncHandler(async (req, res) => {
         const { name, email, password } = req.body;
         const userExists = await User.findOne({ email });
@@ -77,12 +76,43 @@ userRouter.get(
     protect,
     asyncHandler(async (req, res) => {
         const user = await User.findById(req.user._id);
+
         if (user) {
             res.json({
                 _id: user._id,
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
+            });
+        } else {
+            res.status(404);
+            throw new Error("User not found");
+        }
+    })
+);
+
+// update profile
+userRouter.put(
+    "/profile",
+    protect,
+    asyncHandler(async (req, res) => {
+        const user = await User.findById(req.user._id);
+        if (user) {
+            user.name = req.body.name || user.name;
+            user.email = req.body.email || user.email;
+
+            if (req.body.password) {
+                user.password = req.body.password;
+            }
+
+            const updatedUser = await user.save();
+            res.json({
+                _id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                isAdmin: updatedUser.isAdmin,
+                createdAt: updatedUser.createdAt,
+                token: generateToken(updatedUser._id),
             });
         } else {
             res.status(404);

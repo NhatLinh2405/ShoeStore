@@ -1,10 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Header() {
+    const dispatch = useDispatch();
+    
     const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
+    const logoutHandler = () => {
+        dispatch(userInfo);
+    };
 
     return (
         <div className="">
@@ -52,32 +60,60 @@ export default function Header() {
                                     </Link>
                                 </div>
                                 <div className="col-6 d-flex align-items-center justify-content-end Login-Register">
-                                    <div className="btn-group">
-                                        <button
-                                            type="button"
-                                            className="name-button dropdown-toggle"
-                                            data-toggle="dropdown"
-                                            aria-haspopup="true"
-                                            aria-expanded="false"
-                                        >
-                                            <i className="fas fa-user"></i>
-                                        </button>
-                                        <div className="dropdown-menu">
-                                            <Link
-                                                className="dropdown-item"
-                                                to="/login"
+                                    {userInfo ? (
+                                        <div className="btn-group">
+                                            <button
+                                                type="button"
+                                                className="name-button dropdown-toggle"
+                                                data-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
                                             >
-                                                Login
-                                            </Link>
-
-                                            <Link
-                                                className="dropdown-item"
-                                                to="/register"
-                                            >
-                                                Register
-                                            </Link>
+                                                <i className="fas fa-user"></i>
+                                            </button>
+                                            <div className="dropdown-menu">
+                                                <Link
+                                                    className="dropdown-item"
+                                                    to="/profile"
+                                                >
+                                                    Profile
+                                                </Link>
+                                                <Link
+                                                    className="dropdown-item"
+                                                    to="#"
+                                                    onClick={logoutHandler}
+                                                >
+                                                    Logout
+                                                </Link>
+                                            </div>
                                         </div>
-                                    </div>
+                                    ) : (
+                                        <div className="btn-group">
+                                            <button
+                                                type="button"
+                                                className="name-button dropdown-toggle"
+                                                data-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                            >
+                                                <i className="fas fa-user"></i>
+                                            </button>
+                                            <div className="dropdown-menu">
+                                                <Link
+                                                    className="dropdown-item"
+                                                    to="/login"
+                                                >
+                                                    Login
+                                                </Link>
+                                                <Link
+                                                    className="dropdown-item"
+                                                    to="/register"
+                                                >
+                                                    Register
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    )}
 
                                     <Link
                                         to="/cart"
@@ -132,10 +168,40 @@ export default function Header() {
                                 </form>
                             </div>
                             <div className="col-md-3 d-flex align-items-center justify-content-end Login-Register">
-                                <>
-                                    <Link to="/register">Register</Link>
-                                    <Link to="/login">Login</Link>
-                                </>
+                                {userInfo ? (
+                                    <div className="btn-group">
+                                        <button
+                                            type="button"
+                                            className="name-button dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                        >
+                                            Hi, {userInfo.name}
+                                        </button>
+                                        <div className="dropdown-menu">
+                                            <Link
+                                                className="dropdown-item"
+                                                to="/profile"
+                                            >
+                                                Profile
+                                            </Link>
+
+                                            <Link
+                                                className="dropdown-item"
+                                                to="#"
+                                                onClick={logoutHandler}
+                                            >
+                                                Logout
+                                            </Link>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <Link to="/register">Register</Link>
+                                        <Link to="/login">Login</Link>
+                                    </>
+                                )}
                                 <Link to="/cart">
                                     <i className="fas fa-shopping-bag"></i>
                                     <span className="badge">
