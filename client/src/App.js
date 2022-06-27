@@ -1,5 +1,6 @@
 import "./App.css";
 import "./responsive.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -10,7 +11,7 @@ import Profile from "./pages/Profile";
 import Cart from "./pages/Cart";
 import DetailProduct from "./pages/DetailProduct";
 
-import ShippingMethod from "./pages/ShippingMethod";
+import Shipping from "./pages/Shipping";
 import PlaceOrder from "./pages/PlaceOrder";
 import NotFound from "./pages/NotFound";
 
@@ -23,14 +24,14 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-
                 <Route path="/products/:id" element={<DetailProduct />} />
                 <Route path="/profile" element={<Profile />} />
-                
                 <Route path="/cart/:id" element={<Cart />} />
                 <Route path="/cart/" element={<Cart />} />
+                
+                <Route path="/login/shipping" element={<Shipping />} />
+                <Route path="/register/shipping" element={<Shipping />} />
 
-                <Route path="/shipping" element={<ShippingMethod />} />
                 <Route path="/payment" element={<Payment />} />
                 <Route path="/placeorder" element={<PlaceOrder />} />
                 <Route path="*" element={<NotFound />} />

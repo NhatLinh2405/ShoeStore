@@ -1,14 +1,28 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
+import { useSelector, useDispatch } from "react-redux";
+import { savePaymentMethod } from "../Redux/Action/CartAction";
 
 export default function Payment() {
     window.scrollTo(0, 0);
 
+    const cart = useSelector((state) => state.cart);
+    const { shippingAddress } = cart;
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    if (!shippingAddress) {
+        navigate("/shipping");
+    }
+
+    const [paymentMethod, setPaymentMethod] = useState("PayPal");
+
     const submitHandler = (e) => {
         e.preventDefault();
+        dispatch(savePaymentMethod(paymentMethod));
     };
-
     return (
         <>
             <Header />
@@ -21,7 +35,13 @@ export default function Payment() {
                     <div className="payment-container">
                         <div className="radio-container">
                             <input className="form-check-input" type="radio" />
-                            <label className="form-check-label">
+                            <label
+                                value={paymentMethod}
+                                onChange={(e) =>
+                                    setPaymentMethod(e.target.value)
+                                }
+                                className="form-check-label"
+                            >
                                 PayPal or Credit Card
                             </label>
                         </div>

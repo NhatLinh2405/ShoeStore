@@ -18,7 +18,7 @@ export default function Cart() {
     const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2);
 
     const checkOut = () => {
-        navigate("/login?redirect=shipping");
+        navigate(`/login?redirect=shipping`);
     };
 
     const removeFromCart = (id) => {

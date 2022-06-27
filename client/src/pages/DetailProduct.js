@@ -10,9 +10,9 @@ import Loading from "./../components/loadingError/Loading";
 
 export default function SingleProduct() {
     const [qty, setQty] = useState(1);
-    const navigate = useNavigate();
 
     const { id } = useParams();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const productDetail = useSelector((state) => state.productDetail);
@@ -22,7 +22,8 @@ export default function SingleProduct() {
         dispatch(listProductDetail(id));
     }, [dispatch, id]);
 
-    const addToCartHandle = () => {
+    const addToCartHandle = (e) => {
+        e.preventDefault();
         navigate(`/cart/${id}?qty=${qty}`);
     };
 

@@ -6,7 +6,7 @@ import protect from "../Middleware/Auth.js";
 
 const userRouter = express.Router();
 
-// Get all products
+// Get all user
 userRouter.get(
     "/",
     asyncHandler(async (req, res) => {
@@ -82,6 +82,7 @@ userRouter.get(
                 _id: user._id,
                 name: user.name,
                 email: user.email,
+                password: user.password,
                 isAdmin: user.isAdmin,
             });
         } else {

@@ -4,7 +4,7 @@ export default function Order() {
     return (
         <div className="d-flex justify-content-center align-items-center flex-column">
             <div className="table">
-                <thead>
+                {/* <thead>
                     <tr>
                         <th>ID</th>
                         <th>STATUS</th>
@@ -13,16 +13,6 @@ export default function Order() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className={"table-success"}>
-                        <td>
-                            <a href="/" className="link">
-                                1
-                            </a>
-                        </td>
-                        <td>Paid</td>
-                        <td>June 16 2022</td>
-                        <td>$ 234</td>
-                    </tr>
                     <tr className={"table-danger"}>
                         <td>
                             <a href="/" className="link">
@@ -33,7 +23,7 @@ export default function Order() {
                         <td>June 16 2022</td>
                         <td>$ 34</td>
                     </tr>
-                </tbody>
+                </tbody> */}
             </div>
         </div>
     );

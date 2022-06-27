@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import moment from "moment";
 import Header from "../components/Header";
 import ProfileTabs from "../components/profileComponents/ProfileTabs";
 import Orders from "../components/profileComponents/Order";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetails } from "../Redux/Action/UserAction";
 
 export default function Profile() {
     window.scrollTo(0, 0);
+
+    const dispatch = useDispatch();
+
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
+    useEffect(() => {
+        dispatch(getUserDetails("profile"));
+    }, [dispatch]);
     return (
         <>
             <Header />
@@ -19,10 +31,14 @@ export default function Profile() {
                                 </div>
                                 <div className="author-card-details col-md-7">
                                     <h5 className="author-card-name mb-2">
-                                        <strong>1</strong>
+                                        <strong>{userInfo.name}</strong>
                                     </h5>
                                     <span className="author-card-position">
-                                        <span>Joined</span>
+                                        <span>
+                                            {moment(userInfo.CreatedAt).format(
+                                                "LL"
+                                            )}
+                                        </span>
                                     </span>
                                 </div>
                             </div>

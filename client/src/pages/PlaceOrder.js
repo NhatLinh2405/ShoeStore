@@ -1,11 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
+import { useSelector } from "react-redux";
+
+import Message from "../components/loadingError/Error";
 
 export default function PlaceOrder() {
     window.scrollTo(0, 0);
 
-    const placeOrderHandler = (e) => [e.preventDefault()];
+    const cart = useSelector((state) => state.cart);
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
+    // price
+    const addDecimals = (num) => {
+        return (Math.round(num * 100) / 100).toFixed(2);
+    };
+
+    cart.itemsPrice = addDecimals(
+        cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    );
+    cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
+    cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
+    cart.totalPrice = (
+        Number(cart.itemsPrice) +
+        Number(cart.shippingPrice) +
+        Number(cart.taxPrice)
+    ).toFixed(2);
+
+    const placeOrderHandler = (e) => {
+        e.preventDefault();
+    };
 
     return (
         <>
@@ -23,8 +48,8 @@ export default function PlaceOrder() {
                                 <h5>
                                     <strong>Customer</strong>
                                 </h5>
-                                <p>Linh</p>
-                                <p>Linh</p>
+                                <p>{userInfo.name}</p>
+                                <p>{userInfo.email}</p>
                             </div>
                         </div>
                     </div>
@@ -39,8 +64,8 @@ export default function PlaceOrder() {
                                 <h5>
                                     <strong>Order info</strong>
                                 </h5>
-                                <p>Shipping: VN</p>
-                                <p>Pay method: Paypal</p>
+                                <p>Shipping: {cart.shippingAddress.country}</p>
+                                <p>Pay method: {cart.paymentMethod}</p>
                             </div>
                         </div>
                     </div>
@@ -55,7 +80,13 @@ export default function PlaceOrder() {
                                 <h5>
                                     <strong>Deliver to</strong>
                                 </h5>
-                                <p>Address: Bac Lieu</p>
+                                <p>
+                                    Address: {cart.shippingAddress.country},{""}
+                                    {cart.shippingAddress.city},{""},
+                                    {cart.shippingAddress.district},{""},
+                                    {cart.shippingAddress.communee},{""},
+                                    {cart.shippingAddress.address},
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -63,24 +94,42 @@ export default function PlaceOrder() {
 
                 <div className="row order-products justify-content-between">
                     <div className="col-lg-8">
-                        <div className="order-product row">
-                            <div className="col-md-3 col-6">
-                                <img src="" alt="" />
-                            </div>
-                            <div className="col-md-5 col-6 d-flex align-items-center">
-                                <Link to={"/"}>
-                                    <h6>1</h6>
-                                </Link>
-                            </div>
-                            <div className="mt-3 mt-md-0 col-md-2 col-6  d-flex align-items-center flex-column justify-content-center ">
-                                <h4>QUANTITY</h4>
-                                <h6>1</h6>
-                            </div>
-                            <div className="mt-3 mt-md-0 col-md-2 col-6 align-items-end  d-flex flex-column justify-content-center ">
-                                <h4>SUBTOTAL</h4>
-                                <h6>$ 223</h6>
-                            </div>
-                        </div>
+                        {cart.cartItems.length === 0 ? (
+                            <Message variant="alert-info mt-5">
+                                Your cart is empty
+                            </Message>
+                        ) : (
+                            <>
+                                {cart.cartItems.map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className="order-product row"
+                                    >
+                                        <div className="col-md-3 col-6">
+                                            <img
+                                                src={item.image}
+                                                alt={item.name}
+                                            />
+                                        </div>
+                                        <div className="col-md-5 col-6 d-flex align-items-center">
+                                            <Link
+                                                to={`/products/${item.product}`}
+                                            >
+                                                <h6>{item.name}</h6>
+                                            </Link>
+                                        </div>
+                                        <div className="mt-3 mt-md-0 col-md-2 col-6  d-flex align-items-center flex-column justify-content-center ">
+                                            <h4>QUANTITY</h4>
+                                            <h6>{item.qty}</h6>
+                                        </div>
+                                        <div className="mt-3 mt-md-0 col-md-2 col-6 align-items-end  d-flex flex-column justify-content-center ">
+                                            <h4>SUBTOTAL</h4>
+                                            <h6>$ {item.qty * item.price}</h6>
+                                        </div>
+                                    </div>
+                                ))}
+                            </>
+                        )}
                     </div>
                     <div className="col-lg-3 d-flex align-items-end flex-column mt-5 subtotal-order">
                         <table className="table table-bordered">
@@ -89,31 +138,33 @@ export default function PlaceOrder() {
                                     <td>
                                         <strong>Products</strong>
                                     </td>
-                                    <td>$ 123</td>
+                                    <td>$ {cart.itemsPrice}</td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <strong>Shipping</strong>
                                     </td>
-                                    <td>$ 123</td>
+                                    <td>$ {cart.shippingPrice}</td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <strong>Tax</strong>
                                     </td>
-                                    <td>$ 123</td>
+                                    <td>$ {cart.taxPrice}</td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <strong>Total</strong>
                                     </td>
-                                    <td>$ 123</td>
+                                    <td>$ {cart.totalPrice}</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <button type="submit" onClick={placeOrderHandler}>
-                            PLACE ORDER
-                        </button>
+                        {cart.cartItems.length === 0 ? null : (
+                            <button type="submit" onClick={placeOrderHandler}>
+                                PLACE ORDER
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
