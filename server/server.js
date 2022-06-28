@@ -6,6 +6,7 @@ import { errorHandler, NotFound } from "./Middleware/Error.js";
 
 import ProductRoutes from "./Routes/ProductRoutes.js";
 import userRouter from "./Routes/UserRoutes.js";
+import orderRouters from "./Routes/OrderRoutes.js";
 
 dotenv.config();
 connectDatabase();
@@ -16,14 +17,11 @@ app.use(express.json());
 app.use("/api/import", ImportData);
 app.use("/api/products", ProductRoutes);
 app.use("/api/users", userRouter);
+app.use("/api/orders", orderRouters);
 
 // error handler
 app.use(NotFound);
 app.use(errorHandler);
-
-// app.get("/", (req, res) => {
-//     res.send("API is Running...");
-// });
 
 const PORT = process.env.PORT || 1000;
 

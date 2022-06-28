@@ -55,6 +55,14 @@
 -   Payment page
 -   PlaceOrder page -> bug
 
+### Day 13:
+
+-   PlaceOrder page -> fix
+-   Payment page
+-   Payment page
+-   Create order -> bug
+-   Order API
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

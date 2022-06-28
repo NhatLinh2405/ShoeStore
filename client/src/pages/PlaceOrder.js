@@ -1,14 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Message from "../components/loadingError/Error";
+import { ORDER_LIST_MY_RESET } from "./../Redux/Constants/OrderConstants";
+import { createOrder } from "../Redux/Action/OrderAction";
 
 export default function PlaceOrder() {
-    window.scrollTo(0, 0);
+    let navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const cart = useSelector((state) => state.cart);
+    const { cartItems, shippingAddress } = cart;
+
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
@@ -17,20 +22,38 @@ export default function PlaceOrder() {
         return (Math.round(num * 100) / 100).toFixed(2);
     };
 
-    cart.itemsPrice = addDecimals(
+    const itemsPrice = addDecimals(
         cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     );
-    cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
-    cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
-    cart.totalPrice = (
-        Number(cart.itemsPrice) +
-        Number(cart.shippingPrice) +
-        Number(cart.taxPrice)
+    const shippingPrice = addDecimals(itemsPrice > 100 ? 0 : 100);
+    const taxPrice = addDecimals(Number((0.15 * itemsPrice).toFixed(2)));
+    const totalPrice = (
+        Number(itemsPrice) +
+        Number(shippingPrice) +
+        Number(taxPrice)
     ).toFixed(2);
 
+    const orderCreate = useSelector((state) => state.orderCreate);
+    const { order, success, error } = orderCreate;
     const placeOrderHandler = (e) => {
         e.preventDefault();
+        dispatch(
+            createOrder({
+                orderItems: cartItems,
+                shippingAddress: shippingAddress,
+                itemsPrice: itemsPrice,
+                shippingPrice: shippingPrice,
+                taxPrice: taxPrice,
+                totalPrice: totalPrice,
+            })
+        );
     };
+    useEffect(() => {
+        if (success) {
+            navigate(`/order/${order._id}`);
+            dispatch({ type: ORDER_LIST_MY_RESET });
+        }
+    }, [dispatch, success, order, navigate]);
 
     return (
         <>
@@ -84,7 +107,7 @@ export default function PlaceOrder() {
                                     Address: {cart.shippingAddress.country},{""}
                                     {cart.shippingAddress.city},{""},
                                     {cart.shippingAddress.district},{""},
-                                    {cart.shippingAddress.communee},{""},
+                                    {cart.shippingAddress.commune},{""},
                                     {cart.shippingAddress.address},
                                 </p>
                             </div>
@@ -138,25 +161,25 @@ export default function PlaceOrder() {
                                     <td>
                                         <strong>Products</strong>
                                     </td>
-                                    <td>$ {cart.itemsPrice}</td>
+                                    <td>$ {itemsPrice}</td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <strong>Shipping</strong>
                                     </td>
-                                    <td>$ {cart.shippingPrice}</td>
+                                    <td>$ {shippingPrice}</td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <strong>Tax</strong>
                                     </td>
-                                    <td>$ {cart.taxPrice}</td>
+                                    <td>$ {taxPrice}</td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <strong>Total</strong>
                                     </td>
-                                    <td>$ {cart.totalPrice}</td>
+                                    <td>$ {totalPrice}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -164,6 +187,13 @@ export default function PlaceOrder() {
                             <button type="submit" onClick={placeOrderHandler}>
                                 PLACE ORDER
                             </button>
+                        )}
+                        {error && (
+                            <div className="my-3 col-12">
+                                <Message variant="alert-danger">
+                                    {error}
+                                </Message>
+                            </div>
                         )}
                     </div>
                 </div>

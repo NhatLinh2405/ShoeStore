@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { useSelector, useDispatch } from "react-redux";
 import { savePaymentMethod } from "../Redux/Action/CartAction";
 
-export default function Payment() {
-    window.scrollTo(0, 0);
+const paymentMethods = ["Cash on Delivery", "Paypal"];
 
+export default function Payment() {
     const cart = useSelector((state) => state.cart);
     const { shippingAddress } = cart;
 
@@ -17,11 +17,12 @@ export default function Payment() {
         navigate("/shipping");
     }
 
-    const [paymentMethod, setPaymentMethod] = useState("PayPal");
+    const [paymentMethod, setPaymentMethod] = useState(paymentMethods[1]);
 
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(savePaymentMethod(paymentMethod));
+        navigate("/placeorder");
     };
     return (
         <>
@@ -33,24 +34,34 @@ export default function Payment() {
                 >
                     <h6>SELECT PAYMENT METHOD</h6>
                     <div className="payment-container">
-                        <div className="radio-container">
-                            <input className="form-check-input" type="radio" />
-                            <label
-                                value={paymentMethod}
-                                onChange={(e) =>
-                                    setPaymentMethod(e.target.value)
-                                }
-                                className="form-check-label"
+                        {paymentMethods.map((method, index) => (
+                            <div
+                                key={method + index}
+                                className="radio-container"
                             >
-                                PayPal or Credit Card
-                            </label>
-                        </div>
+                                <input
+                                    className="form-check-input"
+                                    value={method}
+                                    type="radio"
+                                    name="paymentMethod"
+                                    checked={paymentMethod === method}
+                                    onChange={() => setPaymentMethod(method)}
+                                />
+                                <label
+                                    value={paymentMethod}
+                                    onChange={(e) =>
+                                        setPaymentMethod(e.target.value)
+                                    }
+                                    className="form-check-label"
+                                >
+                                    {method}
+                                </label>
+                            </div>
+                        ))}
                     </div>
 
-                    <button type="submit">
-                        <Link to="/placeorder" className="text-white">
-                            Continue
-                        </Link>
+                    <button type="submit" className="text-white">
+                        Continue
                     </button>
                 </form>
             </div>
